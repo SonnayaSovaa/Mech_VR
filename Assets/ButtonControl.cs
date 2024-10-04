@@ -17,6 +17,7 @@ public class ButtonControl : MonoBehaviour
     [SerializeField] private GameObject Instrpanel;
 
     [SerializeField] private Slider slider;
+    [SerializeField] private AudioSource _audioSource;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class ButtonControl : MonoBehaviour
     {
         PlayerPrefs.SetFloat("Volume", slider.value);
         SceneManager.LoadScene("SampleScene");
+        Time.timeScale = 1;
     }
 
     public void ToMenu()
@@ -62,6 +64,7 @@ public class ButtonControl : MonoBehaviour
             buttonText.text = "продолжить";
             _pause = true;
             pausepanel.SetActive(true);
+            _audioSource.Stop();
         }
         else
         {
@@ -69,6 +72,7 @@ public class ButtonControl : MonoBehaviour
             buttonText.text = "пауза";
             _pause = false;
             pausepanel.SetActive(false);
+            _audioSource.Play();
         }
     }
 
