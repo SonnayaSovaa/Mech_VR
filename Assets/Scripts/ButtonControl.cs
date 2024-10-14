@@ -22,6 +22,7 @@ public class ButtonControl : MonoBehaviour
     private void Awake()
     {
         slider.value = PlayerPrefs.GetFloat("Volume");
+        Time.timeScale = 1;
     }
 
 
