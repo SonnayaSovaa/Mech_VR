@@ -400,9 +400,11 @@ MonoBehaviour:
   assetList:
   - Assets/Bakery/examples/content/sponza/bush.FBX
   - Assets/Bakery/examples/content/floor_lamp.FBX
-  uvOverlapAssetList: 00000000ffffffff
+  - Assets/Imported/halloween-pumpkin-low-poly/source/Halloween Pumpkin LP.fbx
+  - Assets/Imported/pumpkin-graveyard-halloween-diorama/source/Halloween2020Final/HalloweenOptimized.fbx
+  uvOverlapAssetList: 00000000ffffffff0000000001010000
   xatlasWarningShown: 0
-  foundCompatibleSetup: 0
+  foundCompatibleSetup: 1
   gpuName: 
   runsNonRTX: 1
   runsOptix5: 1
