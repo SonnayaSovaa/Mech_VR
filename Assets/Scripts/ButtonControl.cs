@@ -24,10 +24,15 @@ public class ButtonControl : MonoBehaviour
 
     [SerializeField] private Slider sliderC;
 
+
+
     private void Awake()
     {
         slider.value = PlayerPrefs.GetFloat("Volume");
+        if (sliderC!=null) sliderC.value = PlayerPrefs.GetFloat("Volume");
+        _audioSource.volume = slider.value;
         Time.timeScale = 1;
+        _audioSource.Play();
     }
 
 
@@ -43,14 +48,16 @@ public class ButtonControl : MonoBehaviour
 
     public void Restart()
     {
-        PlayerPrefs.SetFloat("Volume", slider.value);
+        if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
+        if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
         SceneManager.LoadScene("SampleScene");
         Time.timeScale = 1;
     }
 
     public void ToMenu()
     {
-        PlayerPrefs.SetFloat("Volume", slider.value);
+        if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
+        if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
         SceneManager.LoadScene("Menu");
         
 
@@ -58,7 +65,8 @@ public class ButtonControl : MonoBehaviour
 
     public void Starting()
     {
-        PlayerPrefs.SetFloat("Volume", slider.value);
+        if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
+        if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
         SceneManager.LoadScene("SampleScene");
     }
 
@@ -66,20 +74,30 @@ public class ButtonControl : MonoBehaviour
     {
         if (!_pause)
         {
+            _audioSource.Pause();
             Time.timeScale=0;
             buttonText.text = "продолжить";
+            buttonTextC.text = "продолжить";
             _pause = true;
-            pausepanel.SetActive(true);
-            _audioSource.Stop();
+
+            
         }
         else
         {
             Time.timeScale=1;
             buttonText.text = "пауза";
+            buttonTextC.text = "пауза";
             _pause = false;
-            pausepanel.SetActive(false);
-            _audioSource.Play();
+           //_audioSource.UnPause();
         }
+        
+        pausedUI();
+    }
+
+    void pausedUI()
+    {
+        pausepanel.SetActive(_pause);
+        pausepanelC.SetActive(_pause);
     }
 
 
