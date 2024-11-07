@@ -18,6 +18,11 @@ public class ButtonControl : MonoBehaviour
 
     [SerializeField] private Slider slider;
     [SerializeField] private AudioSource _audioSource;
+    
+    [SerializeField] private TMP_Text buttonTextC;
+    [SerializeField] private GameObject pausepanelC;
+
+    [SerializeField] private Slider sliderC;
 
     private void Awake()
     {
