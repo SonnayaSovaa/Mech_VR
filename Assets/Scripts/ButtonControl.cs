@@ -24,15 +24,18 @@ public class ButtonControl : MonoBehaviour
 
     [SerializeField] private Slider sliderC;
 
+    [SerializeField] Image fadePanel; 
+    [SerializeField] float fadeSpeed = 1f; 
 
 
-    private void Awake()
+    private void Start()
     {
         slider.value = PlayerPrefs.GetFloat("Volume");
         if (sliderC!=null) sliderC.value = PlayerPrefs.GetFloat("Volume");
         _audioSource.volume = slider.value;
         Time.timeScale = 1;
         _audioSource.Play();
+        StartCoroutine(FadeIn());
     }
 
 
@@ -50,15 +53,14 @@ public class ButtonControl : MonoBehaviour
     {
         if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
         if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
-        SceneManager.LoadScene("SampleScene");
-        Time.timeScale = 1;
+        StartCoroutine(FadeOut("SampleScene"));
     }
 
     public void ToMenu()
     {
         if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
         if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
-        SceneManager.LoadScene("Menu");
+        StartCoroutine(FadeOut("Menu"));
         
 
     }
@@ -66,8 +68,9 @@ public class ButtonControl : MonoBehaviour
     public void Starting()
     {
         if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
-        if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
-        SceneManager.LoadScene("SampleScene");
+        if (sliderC!=null&&sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
+        StartCoroutine(FadeOut("SampleScene"));
+        
     }
 
     public void Pause()
@@ -99,6 +102,37 @@ public class ButtonControl : MonoBehaviour
         pausepanel.SetActive(_pause);
         pausepanelC.SetActive(_pause);
     }
+    
+    
+    private IEnumerator FadeIn() 
+    { 
+        float t = 1f; 
+
+        while (t > 0f) 
+        { 
+            t -= Time.deltaTime * fadeSpeed; 
+            fadePanel.color = new Color(0f, 0f, 0f, t); 
+            yield return null; 
+        } 
+    } 
+
+    private IEnumerator FadeOut(string sceneName) 
+    {
+        float t=0f;
+        for (int i = 0; i < 100000; i++)
+        {
+            t = 0f;
+        }
+        
+        while (t < 1f) 
+        { 
+            t += Time.deltaTime * fadeSpeed; 
+            fadePanel.color = new Color(0f, 0f, 0f, t); 
+            yield return null; 
+        } 
+
+        SceneManager.LoadScene(sceneName); 
+    } 
 
 
 }
