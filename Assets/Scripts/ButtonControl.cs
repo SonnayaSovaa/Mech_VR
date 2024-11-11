@@ -19,21 +19,22 @@ public class ButtonControl : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private AudioSource _audioSource;
     
-    [SerializeField] private TMP_Text buttonTextC;
-    [SerializeField] private GameObject pausepanelC;
+  // [SerializeField] private TMP_Text buttonTextC;
+    //[SerializeField] private GameObject pausepanelC;
 
-    [SerializeField] private Slider sliderC;
+    //[SerializeField] private Slider sliderC;
 
     [SerializeField] Image fadePanel; 
     [SerializeField] float fadeSpeed = 1f; 
 
 
     private void Start()
-    {
-        slider.value = PlayerPrefs.GetFloat("Volume");
-        if (sliderC!=null) sliderC.value = PlayerPrefs.GetFloat("Volume");
-        _audioSource.volume = slider.value;
+    { 
         Time.timeScale = 1;
+        slider.value = PlayerPrefs.GetFloat("Volume");
+        //if (sliderC!=null) sliderC.value = PlayerPrefs.GetFloat("Volume");
+        _audioSource.volume = slider.value;
+       
         _audioSource.Play();
         StartCoroutine(FadeIn());
     }
@@ -51,15 +52,17 @@ public class ButtonControl : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1;
         if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
-        if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
+        //if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
         StartCoroutine(FadeOut("SampleScene"));
     }
 
     public void ToMenu()
     {
+        Time.timeScale = 1;
         if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
-        if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
+        //if (sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
         StartCoroutine(FadeOut("Menu"));
         
 
@@ -68,7 +71,7 @@ public class ButtonControl : MonoBehaviour
     public void Starting()
     {
         if (slider.IsActive()) PlayerPrefs.SetFloat("Volume", slider.value);
-        if (sliderC!=null&&sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
+        //if (sliderC!=null&&sliderC.IsActive()) PlayerPrefs.SetFloat("Volume", sliderC.value);
         StartCoroutine(FadeOut("SampleScene"));
         
     }
@@ -80,7 +83,7 @@ public class ButtonControl : MonoBehaviour
             _audioSource.Pause();
             Time.timeScale=0;
             buttonText.text = "продолжить";
-            buttonTextC.text = "продолжить";
+            //buttonTextC.text = "продолжить";
             _pause = true;
 
             
@@ -89,18 +92,18 @@ public class ButtonControl : MonoBehaviour
         {
             Time.timeScale=1;
             buttonText.text = "пауза";
-            buttonTextC.text = "пауза";
+            //buttonTextC.text = "пауза";
             _pause = false;
            //_audioSource.UnPause();
         }
         
-        pausedUI();
+        //pausedUI();
     }
 
     void pausedUI()
     {
         pausepanel.SetActive(_pause);
-        pausepanelC.SetActive(_pause);
+        //pausepanelC.SetActive(_pause);
     }
     
     
